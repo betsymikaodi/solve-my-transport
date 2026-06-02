@@ -22,7 +22,7 @@ export function InitViewer() {
         <div className="ml-auto text-sm">
           <span className="text-muted-foreground">Z courant : </span>
           <span className="font-mono font-bold text-primary">
-            {step.allocations.reduce((s, a) => s + (a.isEpsilon ? 0 : a.quantity * balanced.costs[a.row][a.col]), 0)}
+            {step.allocations.reduce((s: number, a) => s + (a.isEpsilon ? 0 : a.quantity * balanced.costs[a.row][a.col]), 0)}
           </span>
         </div>
       </div>
