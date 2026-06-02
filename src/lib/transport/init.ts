@@ -192,9 +192,9 @@ function bHammer(p: TransportProblem): InitResult {
 
     // record penalty step
     steps.push(snapshot(
-      `Pénalités calculées. Max = ${maxPen} sur ${axis.kind === 'row' ? `ligne ${axis.index+1}` : `colonne ${axis.index+1}`}.`,
+      `Pénalités calculées. Max = ${maxPen} sur ${sel.kind === 'row' ? `ligne ${sel.index+1}` : `colonne ${sel.index+1}`}.`,
       'penalty', allocs, rs, rd,
-      { rowPenalties: rowPen, colPenalties: colPen, selectedAxis: axis,
+      { rowPenalties: rowPen, colPenalties: colPen, selectedAxis: sel,
         blockedRows: rowDone.map((d, i) => d ? i : -1).filter(x => x >= 0),
         blockedCols: colDone.map((d, j) => d ? j : -1).filter(x => x >= 0),
       }
@@ -202,14 +202,14 @@ function bHammer(p: TransportProblem): InitResult {
 
     // pick min cost cell along that axis
     let bestI = -1, bestJ = -1, bestC = Infinity;
-    if (axis.kind === 'row') {
-      const i = axis.index;
+    if (sel.kind === 'row') {
+      const i = sel.index;
       for (let j = 0; j < n; j++) {
         if (!aliveCols[j]) continue;
         if (p.costs[i][j] < bestC) { bestC = p.costs[i][j]; bestI = i; bestJ = j; }
       }
     } else {
-      const j = axis.index;
+      const j = sel.index;
       for (let i = 0; i < m; i++) {
         if (!aliveRows[i]) continue;
         if (p.costs[i][j] < bestC) { bestC = p.costs[i][j]; bestI = i; bestJ = j; }
