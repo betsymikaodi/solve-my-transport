@@ -3,13 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import type { Allocation } from '@/lib/transport/core';
 
 export function FinalReport() {
   const { balanced, initResult, optimResult, initMethod, optimMethod } = useStore();
   if (!balanced || !initResult || !optimResult) return null;
-  const final = optimResult.finalAllocations
-    .filter(a => !a.isEpsilon && a.quantity > 0)
-    .sort((a, b) => a.row - b.row || a.col - b.col);
+  const final: Allocation[] = optimResult.finalAllocations
+    .filter((a: Allocation) => !a.isEpsilon && a.quantity > 0)
+    .sort((a: Allocation, b: Allocation) => a.row - b.row || a.col - b.col);
 
   const rowL = balanced.rowLabels ?? balanced.supply.map((_, i) => String.fromCharCode(65 + i));
   const colL = balanced.colLabels ?? balanced.demand.map((_, j) => `D${j + 1}`);
