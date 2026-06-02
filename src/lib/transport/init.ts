@@ -177,14 +177,18 @@ function bHammer(p: TransportProblem): InitResult {
     }
 
     let maxPen = -Infinity;
-    let axis: { kind: 'row' | 'col'; index: number } | null = null;
-    rowPen.forEach((p, i) => {
-      if (p !== null && p > maxPen) { maxPen = p; axis = { kind: 'row', index: i }; }
-    });
-    colPen.forEach((p, j) => {
-      if (p !== null && p > maxPen) { maxPen = p; axis = { kind: 'col', index: j }; }
-    });
+    type Axis = { kind: 'row' | 'col'; index: number };
+    let axis: Axis | null = null;
+    for (let i = 0; i < m; i++) {
+      const pv = rowPen[i];
+      if (pv !== null && pv > maxPen) { maxPen = pv; axis = { kind: 'row', index: i }; }
+    }
+    for (let j = 0; j < n; j++) {
+      const pv = colPen[j];
+      if (pv !== null && pv > maxPen) { maxPen = pv; axis = { kind: 'col', index: j }; }
+    }
     if (!axis) break;
+    const sel: Axis = axis;
 
     // record penalty step
     steps.push(snapshot(
