@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { TransportProblem, InitMethod, OptimMethod, BalancedProblem } from '@/lib/transport/core';
+import { TransportProblem, InitMethod, OptimMethod, BalancedProblem, InitResult, OptimResult } from '@/lib/transport/core';
 import { balanceProblem } from '@/lib/transport/core';
-import { solveInit, InitResult } from '@/lib/transport/init';
-import { solveOptim, OptimResult } from '@/lib/transport/optim';
+import { solveInit } from '@/lib/transport/init';
+import { solveOptim } from '@/lib/transport/optim';
 
 interface Store {
   problem: TransportProblem;
