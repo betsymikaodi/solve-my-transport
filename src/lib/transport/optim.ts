@@ -1,19 +1,25 @@
 // Optimization: Stepping-Stone and MODI.
 
 import {
-  Allocation, OptimMethod, OptimResult, OptimStep, TransportProblem,
-  cloneAllocs, computeCost, findAlloc, fixDegeneracy,
-} from './core';
-import { cycleSigns, findCycle, pivot } from './cycle';
+  Allocation,
+  OptimMethod,
+  OptimResult,
+  OptimStep,
+  TransportProblem,
+  cloneAllocs,
+  computeCost,
+  findAlloc,
+  fixDegeneracy,
+} from "./core";
+import { cycleSigns, findCycle, pivot } from "./cycle";
 
 const MAX_ITER = 50;
 
 function emptyCells(allocs: Allocation[], m: number, n: number): [number, number][] {
-  const occ = new Set(allocs.map(a => `${a.row},${a.col}`));
+  const occ = new Set(allocs.map((a) => `${a.row},${a.col}`));
   const out: [number, number][] = [];
   for (let i = 0; i < m; i++)
-    for (let j = 0; j < n; j++)
-      if (!occ.has(`${i},${j}`)) out.push([i, j]);
+    for (let j = 0; j < n; j++) if (!occ.has(`${i},${j}`)) out.push([i, j]);
   return out;
 }
 
@@ -43,7 +49,8 @@ export function solveOptim(
   initial: Allocation[],
   p: TransportProblem,
 ): OptimResult {
-  const m = p.supply.length, n = p.demand.length;
+  const m = p.supply.length,
+    n = p.demand.length;
   let allocs = fixDegeneracy(cloneAllocs(initial), m, n, p.costs).allocations;
   const steps: OptimStep[] = [];
   let iter = 0;
@@ -55,7 +62,7 @@ export function solveOptim(
     let potentials: { u: (number | null)[]; v: (number | null)[] } | undefined;
     const deltas: { row: number; col: number; delta: number }[] = [];
 
-    if (method === 'MODI') {
+    if (method === "MODI") {
       potentials = computePotentials(allocs, p.costs, m, n);
       for (const [i, j] of emptyCells(allocs, m, n)) {
         const ui = potentials.u[i] ?? 0;
@@ -70,7 +77,7 @@ export function solveOptim(
         const signs = cycleSigns(cyc);
         let d = 0;
         cyc.forEach(([r, c], k) => {
-          d += (signs[k] === '+' ? 1 : -1) * p.costs[r][c];
+          d += (signs[k] === "+" ? 1 : -1) * p.costs[r][c];
         });
         deltas.push({ row: i, col: j, delta: d });
       }
@@ -84,11 +91,16 @@ export function solveOptim(
 
     if (!best || best.delta >= 0) {
       // optimal
-      if (deltas.some(d => d.delta === 0)) multipleOptima = true;
+      if (deltas.some((d) => d.delta === 0)) multipleOptima = true;
       steps.push({
-        iteration: iter, allocations: cloneAllocs(allocs), totalCost,
-        potentials, deltas, optimal: true, multipleOptima,
-        message: `Tous les Δᵢⱼ ≥ 0 → solution optimale. Z = ${totalCost}.${multipleOptima ? ' (Solutions multiples possibles.)' : ''}`,
+        iteration: iter,
+        allocations: cloneAllocs(allocs),
+        totalCost,
+        potentials,
+        deltas,
+        optimal: true,
+        multipleOptima,
+        message: `Tous les Δᵢⱼ ≥ 0 → solution optimale. Z = ${totalCost}.${multipleOptima ? " (Solutions multiples possibles.)" : ""}`,
       });
       break;
     }
@@ -96,9 +108,14 @@ export function solveOptim(
     const cyc = findCycle(allocs, best.row, best.col);
     if (!cyc) {
       steps.push({
-        iteration: iter, allocations: cloneAllocs(allocs), totalCost,
-        potentials, deltas, optimal: true, multipleOptima,
-        message: `Impossible de construire un cycle pour (${best.row+1},${best.col+1}). Arrêt.`,
+        iteration: iter,
+        allocations: cloneAllocs(allocs),
+        totalCost,
+        potentials,
+        deltas,
+        optimal: true,
+        multipleOptima,
+        message: `Impossible de construire un cycle pour (${best.row + 1},${best.col + 1}). Arrêt.`,
       });
       break;
     }
@@ -115,7 +132,7 @@ export function solveOptim(
       cycle: { cells: cyc, signs },
       theta,
       optimal: false,
-      message: `Itération ${iter} : entrée (${best.row+1},${best.col+1}), Δ = ${best.delta}, θ = ${theta}. Nouveau Z = ${totalCost + theta * best.delta}.`,
+      message: `Itération ${iter} : entrée (${best.row + 1},${best.col + 1}), Δ = ${best.delta}, θ = ${theta}. Nouveau Z = ${totalCost + theta * best.delta}.`,
     });
 
     // re-fix degeneracy

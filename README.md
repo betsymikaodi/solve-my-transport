@@ -28,12 +28,12 @@ Le **problème de transport** consiste à acheminer un bien depuis `m` origines 
 
 **Données**
 
-| Symbole | Signification |
-|---|---|
-| `aᵢ` | Offre disponible à l'origine *i* (i = 1..m) |
-| `bⱼ` | Demande à la destination *j* (j = 1..n) |
-| `cᵢⱼ` | Coût unitaire de transport de *i* vers *j* |
-| `xᵢⱼ` | Quantité transportée de *i* vers *j* (variable de décision) |
+| Symbole | Signification                                               |
+| ------- | ----------------------------------------------------------- |
+| `aᵢ`    | Offre disponible à l'origine _i_ (i = 1..m)                 |
+| `bⱼ`    | Demande à la destination _j_ (j = 1..n)                     |
+| `cᵢⱼ`   | Coût unitaire de transport de _i_ vers _j_                  |
+| `xᵢⱼ`   | Quantité transportée de _i_ vers _j_ (variable de décision) |
 
 **Modèle mathématique**
 
@@ -65,7 +65,7 @@ bun run dev
 bun run build
 ```
 
-Au premier lancement, le **tableau du cours** (4 origines × 6 destinations, Z* = 3 529) est pré-chargé pour vous permettre de tester immédiatement la chaîne complète.
+Au premier lancement, le **tableau du cours** (4 origines × 6 destinations, Z\* = 3 529) est pré-chargé pour vous permettre de tester immédiatement la chaîne complète.
 
 ---
 
@@ -81,7 +81,7 @@ L'interface est organisée en **4 sections numérotées** que vous parcourez de 
 4. Saisissez les **demandes bⱼ** dans la ligne du bas (fond doré).
 5. L'indicateur en haut à droite affiche en temps réel :
    - ✅ **« Équilibré »** si `Σaᵢ = Σbⱼ`
-   - ⚠️ **« Déséquilibre : ±X »** sinon — *l'app ajoutera automatiquement une origine ou destination fictive*.
+   - ⚠️ **« Déséquilibre : ±X »** sinon — _l'app ajoutera automatiquement une origine ou destination fictive_.
 6. Bouton **« Charger l'exemple du cours »** : remet le problème de référence du PDF.
 
 ### Étape ② — Choix des méthodes
@@ -103,12 +103,12 @@ Trois onglets apparaissent :
 
 Contrôles disponibles dans chaque viewer :
 
-| Bouton | Action |
-|---|---|
-| ⏮ | Aller à la 1ʳᵉ étape |
-| ◀ | Étape précédente |
-| ▶ | Étape suivante |
-| ⏭ | Aller à la dernière étape |
+| Bouton | Action                    |
+| ------ | ------------------------- |
+| ⏮     | Aller à la 1ʳᵉ étape      |
+| ◀      | Étape précédente          |
+| ▶      | Étape suivante            |
+| ⏭     | Aller à la dernière étape |
 
 ### Étape ④ — Rapport final
 
@@ -138,8 +138,9 @@ La plus simple, **jamais optimale**, utile comme référence pédagogique.
 
 ### 4.2 MINILI — Minimum Ligne par Ligne
 
-Pour chaque ligne *i* dans l'ordre :
-1. Trouver la colonne *j* (non saturée) où `cᵢⱼ` est minimum
+Pour chaque ligne _i_ dans l'ordre :
+
+1. Trouver la colonne _j_ (non saturée) où `cᵢⱼ` est minimum
 2. Allouer `min(aᵢ, bⱼ)`
 3. Continuer dans la même ligne jusqu'à sa saturation, puis passer à la suivante
 
@@ -150,6 +151,7 @@ Identique à MINILI, mais en parcourant les **colonnes**.
 ### 4.4 MINITAB — Minimum global du tableau
 
 À chaque étape :
+
 1. Scanner toutes les cases encore disponibles
 2. Choisir `(i*, j*) = argmin cᵢⱼ` sur tout le tableau
 3. Allouer, saturer, recommencer
@@ -226,7 +228,7 @@ Si après une allocation le nombre de cases occupées est **strictement inférie
 ### 6.3 Solutions multiples optimales
 
 Si à l'optimum un `Δᵢⱼ = 0` existe pour une case vide, l'app signale dans le rapport :
-*« · Solutions multiples »* → il existe au moins une autre solution optimale alternative équivalente.
+_« · Solutions multiples »_ → il existe au moins une autre solution optimale alternative équivalente.
 
 ---
 
@@ -243,19 +245,19 @@ Si à l'optimum un `Δᵢⱼ = 0` existe pour une case vide, l'app signale dans 
 └──────┴─────┴─────┴─────┴─────┴──────┘
 ```
 
-| Élément visuel | Signification |
-|---|---|
-| Petit chiffre en haut-gauche d'une case | Coût `cᵢⱼ` |
-| Gros chiffre au centre | Quantité allouée `xᵢⱼ` |
-| **ε** doré italique | Allocation fictive (dégénérescence) |
-| Fond **vert** + bordure | Case sélectionnée à cette étape |
-| Fond **doré** + bordure | Case entrant dans la base (Δ < 0) |
-| Fond **vert pâle + signe +** | Case `+` du cycle Stepping-Stone |
-| Fond **rouge pâle + signe −** | Case `−` du cycle |
-| Δ=… dans une case vide | Indice d'amélioration (rouge gras si < 0) |
-| Colonne **Pén.** / ligne **Pén.** | Pénalités Balas-Hammer ; cellule rouge = max |
-| Colonne **uᵢ** / ligne **vⱼ** | Potentiels MODI |
-| En-tête doré italique (`D*`, `O*`) | Ligne ou colonne fictive ajoutée |
+| Élément visuel                          | Signification                                |
+| --------------------------------------- | -------------------------------------------- |
+| Petit chiffre en haut-gauche d'une case | Coût `cᵢⱼ`                                   |
+| Gros chiffre au centre                  | Quantité allouée `xᵢⱼ`                       |
+| **ε** doré italique                     | Allocation fictive (dégénérescence)          |
+| Fond **vert** + bordure                 | Case sélectionnée à cette étape              |
+| Fond **doré** + bordure                 | Case entrant dans la base (Δ < 0)            |
+| Fond **vert pâle + signe +**            | Case `+` du cycle Stepping-Stone             |
+| Fond **rouge pâle + signe −**           | Case `−` du cycle                            |
+| Δ=… dans une case vide                  | Indice d'amélioration (rouge gras si < 0)    |
+| Colonne **Pén.** / ligne **Pén.**       | Pénalités Balas-Hammer ; cellule rouge = max |
+| Colonne **uᵢ** / ligne **vⱼ**           | Potentiels MODI                              |
+| En-tête doré italique (`D*`, `O*`)      | Ligne ou colonne fictive ajoutée             |
 
 ---
 
@@ -263,13 +265,13 @@ Si à l'optimum un `Δᵢⱼ = 0` existe pour une case vide, l'app signale dans 
 
 Tableau **4 origines × 6 destinations** :
 
-| | D1 | D2 | D3 | D4 | D5 | D6 | **aᵢ** |
-|---|---|---|---|---|---|---|---|
-| **A** | 24 | 22 | 61 | 49 | 83 | 35 | 18 |
-| **B** | 23 | 39 | 78 | 28 | 65 | 42 | 32 |
-| **C** | 67 | 56 | 92 | 24 | 53 | 54 | 14 |
-| **D** | 71 | 43 | 91 | 67 | 40 | 49 | 9 |
-| **bⱼ** | 9 | 11 | 28 | 6 | 14 | 5 | **Σ = 73** |
+|        | D1  | D2  | D3  | D4  | D5  | D6  | **aᵢ**     |
+| ------ | --- | --- | --- | --- | --- | --- | ---------- |
+| **A**  | 24  | 22  | 61  | 49  | 83  | 35  | 18         |
+| **B**  | 23  | 39  | 78  | 28  | 65  | 42  | 32         |
+| **C**  | 67  | 56  | 92  | 24  | 53  | 54  | 14         |
+| **D**  | 71  | 43  | 91  | 67  | 40  | 49  | 9          |
+| **bⱼ** | 9   | 11  | 28  | 6   | 14  | 5   | **Σ = 73** |
 
 **Solution optimale** (Balas-Hammer + MODI) :
 
@@ -285,13 +287,13 @@ Allocations :
 
 **Résultats obtenus par l'application sur ce même problème** :
 
-| Méthode d'init | Z initial | Z optimisé (MODI) | Itérations |
-|---|---:|---:|---:|
-| Coin Nord-Ouest | 3 763 | **3 529** | 5 |
-| MINILI | 4 241 | **3 529** | 6 |
-| MINICO | 3 529 | **3 529** | 1 |
-| MINITAB | 3 585 | **3 529** | 3 |
-| Balas-Hammer | 3 585 | **3 529** | 3 |
+| Méthode d'init  | Z initial | Z optimisé (MODI) | Itérations |
+| --------------- | --------: | ----------------: | ---------: |
+| Coin Nord-Ouest |     3 763 |         **3 529** |          5 |
+| MINILI          |     4 241 |         **3 529** |          6 |
+| MINICO          |     3 529 |         **3 529** |          1 |
+| MINITAB         |     3 585 |         **3 529** |          3 |
+| Balas-Hammer    |     3 585 |         **3 529** |          3 |
 
 Les 5 méthodes convergent vers la valeur du cours ✓.
 
@@ -328,31 +330,31 @@ Les algorithmes (`lib/transport/`) sont des **fonctions pures**, indépendantes 
 
 ## 10. Validation & tests
 
-| # | Cas testé | Résultat attendu | Statut |
-|---|---|---|---|
-| 1 | **Équilibre** : a=[18,32,14,9], b=[9,11,28,6,14,5] | Σa = Σb = 73 | ✅ |
-| 2 | **Déséquilibre** : a=[20,30], b=[15,10,20] | Destination fictive bⱼ=5, c=0 | ✅ |
-| 3 | **Nombre de cases de base** = m + n − 1 = 9 | Exactement 9 cases | ✅ |
-| 4 | **Dégénérescence** détectée | Allocation ε ajoutée, arbre préservé | ✅ |
-| 5 | **Optimalité** : tous les Δᵢⱼ ≥ 0 à la fin | Z* = 3 529 sur l'exemple cours | ✅ |
-| 6 | **Cohérence** : Σⱼ xᵢⱼ = aᵢ et Σᵢ xᵢⱼ = bⱼ | Toutes les contraintes saturées | ✅ |
+| #   | Cas testé                                          | Résultat attendu                     | Statut |
+| --- | -------------------------------------------------- | ------------------------------------ | ------ |
+| 1   | **Équilibre** : a=[18,32,14,9], b=[9,11,28,6,14,5] | Σa = Σb = 73                         | ✅     |
+| 2   | **Déséquilibre** : a=[20,30], b=[15,10,20]         | Destination fictive bⱼ=5, c=0        | ✅     |
+| 3   | **Nombre de cases de base** = m + n − 1 = 9        | Exactement 9 cases                   | ✅     |
+| 4   | **Dégénérescence** détectée                        | Allocation ε ajoutée, arbre préservé | ✅     |
+| 5   | **Optimalité** : tous les Δᵢⱼ ≥ 0 à la fin         | Z\* = 3 529 sur l'exemple cours      | ✅     |
+| 6   | **Cohérence** : Σⱼ xᵢⱼ = aᵢ et Σᵢ xᵢⱼ = bⱼ         | Toutes les contraintes saturées      | ✅     |
 
 ---
 
 ## 11. Glossaire
 
-| Terme | Définition |
-|---|---|
-| **SBR** | Solution de base réalisable : ensemble de `m + n − 1` cases qui sature toutes les contraintes. |
-| **Case occupée / case de base** | Case avec `xᵢⱼ > 0` (ou ε). |
-| **Case vide** | Case hors-base, candidate à entrer dans la base lors d'un pivot. |
-| **Cycle (Stepping-Stone)** | Chemin fermé alternant lignes et colonnes, passant par une case vide + des cases occupées. |
-| **Pénalité (VAM)** | Différence entre les deux plus petits coûts d'une ligne ou colonne. |
-| **Potentiels uᵢ, vⱼ (MODI)** | Multiplicateurs duaux satisfaisant `uᵢ + vⱼ = cᵢⱼ` sur les cases de base. |
-| **Indice Δᵢⱼ** | Coût marginal d'introduire une case vide dans la base ; négatif ⇒ amélioration possible. |
-| **θ** | Quantité transférée le long d'un cycle, = `min(xᵢⱼ)` sur les cases `−` du cycle. |
-| **ε** | Allocation fictive infinitésimale, traitée comme 0 dans le coût mais comme une case de base. |
-| **Origine / destination fictive** | Ligne ou colonne ajoutée à coût nul pour rééquilibrer offre et demande. |
+| Terme                             | Définition                                                                                     |
+| --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **SBR**                           | Solution de base réalisable : ensemble de `m + n − 1` cases qui sature toutes les contraintes. |
+| **Case occupée / case de base**   | Case avec `xᵢⱼ > 0` (ou ε).                                                                    |
+| **Case vide**                     | Case hors-base, candidate à entrer dans la base lors d'un pivot.                               |
+| **Cycle (Stepping-Stone)**        | Chemin fermé alternant lignes et colonnes, passant par une case vide + des cases occupées.     |
+| **Pénalité (VAM)**                | Différence entre les deux plus petits coûts d'une ligne ou colonne.                            |
+| **Potentiels uᵢ, vⱼ (MODI)**      | Multiplicateurs duaux satisfaisant `uᵢ + vⱼ = cᵢⱼ` sur les cases de base.                      |
+| **Indice Δᵢⱼ**                    | Coût marginal d'introduire une case vide dans la base ; négatif ⇒ amélioration possible.       |
+| **θ**                             | Quantité transférée le long d'un cycle, = `min(xᵢⱼ)` sur les cases `−` du cycle.               |
+| **ε**                             | Allocation fictive infinitésimale, traitée comme 0 dans le coût mais comme une case de base.   |
+| **Origine / destination fictive** | Ligne ou colonne ajoutée à coût nul pour rééquilibrer offre et demande.                        |
 
 ---
 

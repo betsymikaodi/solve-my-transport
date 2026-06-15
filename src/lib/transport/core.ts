@@ -1,7 +1,7 @@
 // Core types & utilities for the transportation problem solver
 
-export type InitMethod = 'NorthWest' | 'MINILI' | 'MINICO' | 'MINITAB' | 'BHammer';
-export type OptimMethod = 'SteppingStone' | 'MODI';
+export type InitMethod = "NorthWest" | "MINILI" | "MINICO" | "MINITAB" | "BHammer";
+export type OptimMethod = "SteppingStone" | "MODI";
 
 export interface TransportProblem {
   supply: number[];
@@ -13,7 +13,7 @@ export interface TransportProblem {
 
 export interface BalancedProblem extends TransportProblem {
   isBalanced: boolean;
-  fictiveAdded: 'row' | 'col' | null;
+  fictiveAdded: "row" | "col" | null;
   originalM: number;
   originalN: number;
 }
@@ -26,7 +26,7 @@ export interface Allocation {
 }
 
 export interface InitStep {
-  type: 'allocate' | 'penalty' | 'note';
+  type: "allocate" | "penalty" | "note";
   message: string;
   // snapshot of allocations after this step
   allocations: Allocation[];
@@ -37,7 +37,7 @@ export interface InitStep {
   // for BHammer
   rowPenalties?: (number | null)[];
   colPenalties?: (number | null)[];
-  selectedAxis?: { kind: 'row' | 'col'; index: number };
+  selectedAxis?: { kind: "row" | "col"; index: number };
   blockedRows?: number[];
   blockedCols?: number[];
 }
@@ -51,8 +51,8 @@ export interface InitResult {
 }
 
 export interface CycleInfo {
-  cells: [number, number][];        // alternating +,-,+,- starting with the entering cell (+)
-  signs: ('+' | '-')[];
+  cells: [number, number][]; // alternating +,-,+,- starting with the entering cell (+)
+  signs: ("+" | "-")[];
 }
 
 export interface OptimStep {
@@ -78,14 +78,16 @@ export interface OptimResult {
   multipleOptima: boolean;
 }
 
-export function sum(a: number[]) { return a.reduce((s, x) => s + x, 0); }
+export function sum(a: number[]) {
+  return a.reduce((s, x) => s + x, 0);
+}
 
 export function cloneAllocs(a: Allocation[]): Allocation[] {
-  return a.map(x => ({ ...x }));
+  return a.map((x) => ({ ...x }));
 }
 
 export function findAlloc(a: Allocation[], i: number, j: number): Allocation | undefined {
-  return a.find(x => x.row === i && x.col === j);
+  return a.find((x) => x.row === i && x.col === j);
 }
 
 export function computeCost(allocations: Allocation[], costs: number[][]): number {
@@ -120,11 +122,11 @@ export function balanceProblem(p: TransportProblem): BalancedProblem {
     return {
       supply: [...p.supply],
       demand: [...p.demand, diff],
-      costs: p.costs.map(row => [...row, 0]),
+      costs: p.costs.map((row) => [...row, 0]),
       rowLabels: p.rowLabels,
-      colLabels: [...(p.colLabels ?? p.demand.map((_, j) => `D${j + 1}`)), 'D*'],
+      colLabels: [...(p.colLabels ?? p.demand.map((_, j) => `D${j + 1}`)), "D*"],
       isBalanced: false,
-      fictiveAdded: 'col',
+      fictiveAdded: "col",
       originalM: m,
       originalN: n,
     };
@@ -135,10 +137,10 @@ export function balanceProblem(p: TransportProblem): BalancedProblem {
     supply: [...p.supply, diff],
     demand: [...p.demand],
     costs: [...p.costs, new Array(n).fill(0)],
-    rowLabels: [...(p.rowLabels ?? p.supply.map((_, i) => String.fromCharCode(65 + i))), 'O*'],
+    rowLabels: [...(p.rowLabels ?? p.supply.map((_, i) => String.fromCharCode(65 + i))), "O*"],
     colLabels: p.colLabels,
     isBalanced: false,
-    fictiveAdded: 'row',
+    fictiveAdded: "row",
     originalM: m,
     originalN: n,
   };
@@ -153,7 +155,7 @@ export function fixDegeneracy(
 ): { allocations: Allocation[]; addedEpsilons: [number, number][]; isDegenerate: boolean } {
   const required = m + n - 1;
   const added: [number, number][] = [];
-  let allocs = cloneAllocs(allocations);
+  const allocs = cloneAllocs(allocations);
   const isDegen = allocs.length < required;
 
   while (allocs.length < required) {
@@ -198,7 +200,10 @@ export function hasCycle(allocs: Allocation[], m: number, n: number): boolean {
   // Simpler: use union-find; if any edge connects two already-connected nodes -> cycle.
   const parent = new Array(m + n).fill(0).map((_, i) => i);
   function find(x: number): number {
-    while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; }
+    while (parent[x] !== x) {
+      parent[x] = parent[parent[x]];
+      x = parent[x];
+    }
     return x;
   }
   for (const a of allocs) {

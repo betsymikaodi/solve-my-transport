@@ -1,8 +1,15 @@
-import { create } from 'zustand';
-import { TransportProblem, InitMethod, OptimMethod, BalancedProblem, InitResult, OptimResult } from '@/lib/transport/core';
-import { balanceProblem } from '@/lib/transport/core';
-import { solveInit } from '@/lib/transport/init';
-import { solveOptim } from '@/lib/transport/optim';
+import { create } from "zustand";
+import {
+  TransportProblem,
+  InitMethod,
+  OptimMethod,
+  BalancedProblem,
+  InitResult,
+  OptimResult,
+} from "@/lib/transport/core";
+import { balanceProblem } from "@/lib/transport/core";
+import { solveInit } from "@/lib/transport/init";
+import { solveOptim } from "@/lib/transport/optim";
 
 interface Store {
   problem: TransportProblem;
@@ -34,22 +41,31 @@ export const EXAMPLE: TransportProblem = {
     [67, 56, 92, 24, 53, 54],
     [71, 43, 91, 67, 40, 49],
   ],
-  rowLabels: ['A', 'B', 'C', 'D'],
-  colLabels: ['D1', 'D2', 'D3', 'D4', 'D5', 'D6'],
+  rowLabels: ["A", "B", "C", "D"],
+  colLabels: ["D1", "D2", "D3", "D4", "D5", "D6"],
 };
 
 export const useStore = create<Store>((set, get) => ({
   problem: EXAMPLE,
-  initMethod: 'BHammer',
-  optimMethod: 'MODI',
+  initMethod: "BHammer",
+  optimMethod: "MODI",
   balanced: null,
   initResult: null,
   optimResult: null,
   initStepIdx: 0,
   optimStepIdx: 0,
 
-  setProblem: (p) => set({ problem: p, balanced: null, initResult: null, optimResult: null, initStepIdx: 0, optimStepIdx: 0 }),
-  setInitMethod: (m) => set({ initMethod: m, initResult: null, optimResult: null, initStepIdx: 0, optimStepIdx: 0 }),
+  setProblem: (p) =>
+    set({
+      problem: p,
+      balanced: null,
+      initResult: null,
+      optimResult: null,
+      initStepIdx: 0,
+      optimStepIdx: 0,
+    }),
+  setInitMethod: (m) =>
+    set({ initMethod: m, initResult: null, optimResult: null, initStepIdx: 0, optimStepIdx: 0 }),
   setOptimMethod: (m) => set({ optimMethod: m, optimResult: null, optimStepIdx: 0 }),
   solve: () => {
     const { problem, initMethod, optimMethod } = get();
@@ -57,12 +73,15 @@ export const useStore = create<Store>((set, get) => ({
     const initResult = solveInit(initMethod, balanced);
     const optimResult = solveOptim(optimMethod, initResult.allocations, balanced);
     set({
-      balanced, initResult, optimResult,
+      balanced,
+      initResult,
+      optimResult,
       initStepIdx: initResult.steps.length - 1,
       optimStepIdx: optimResult.steps.length - 1,
     });
   },
-  reset: () => set({ balanced: null, initResult: null, optimResult: null, initStepIdx: 0, optimStepIdx: 0 }),
+  reset: () =>
+    set({ balanced: null, initResult: null, optimResult: null, initStepIdx: 0, optimStepIdx: 0 }),
   setInitStep: (i) => set({ initStepIdx: i }),
   setOptimStep: (i) => set({ optimStepIdx: i }),
 }));

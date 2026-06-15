@@ -78,19 +78,43 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lovable App" },
-      { name: "description", content: "Transport Solver Plus is an interactive web application for solving linear transportation problems." },
+      {
+        name: "description",
+        content:
+          "Transport Solver Plus is an interactive web application for solving linear transportation problems.",
+      },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Transport Solver Plus is an interactive web application for solving linear transportation problems." },
+      {
+        property: "og:description",
+        content:
+          "Transport Solver Plus is an interactive web application for solving linear transportation problems.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Transport Solver Plus is an interactive web application for solving linear transportation problems." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f097cb42-43e2-4f41-87c1-0295c531abb2/id-preview-db51e541--7353254b-49ec-49ce-925f-455321963eb9.lovable.app-1780416757312.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f097cb42-43e2-4f41-87c1-0295c531abb2/id-preview-db51e541--7353254b-49ec-49ce-925f-455321963eb9.lovable.app-1780416757312.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Transport Solver Plus is an interactive web application for solving linear transportation problems.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f097cb42-43e2-4f41-87c1-0295c531abb2/id-preview-db51e541--7353254b-49ec-49ce-925f-455321963eb9.lovable.app-1780416757312.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f097cb42-43e2-4f41-87c1-0295c531abb2/id-preview-db51e541--7353254b-49ec-49ce-925f-455321963eb9.lovable.app-1780416757312.png",
+      },
     ],
     links: [
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
