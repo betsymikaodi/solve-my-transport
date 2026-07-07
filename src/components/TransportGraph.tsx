@@ -185,7 +185,8 @@ export function TransportGraph({
                 x={edge.labelX}
                 y={edge.labelY + 5}
                 textAnchor="middle"
-                className="fill-white font-sans text-sm font-bold"
+                className="fill-white"
+                style={{ fontFamily: "var(--font-sans)", fontSize: "14px", fontWeight: "700" }}
               >
                 {edge.quantity}
               </text>
@@ -228,7 +229,8 @@ export function TransportGraph({
               x={node.x}
               y={node.y + 5}
               textAnchor="middle"
-              className="fill-black font-sans text-sm font-medium"
+              className="fill-black"
+              style={{ fontFamily: "var(--font-sans)", fontSize: "14px", fontWeight: "500" }}
             >
               {node.id}
             </text>
@@ -236,7 +238,8 @@ export function TransportGraph({
               x={node.x - 35}
               y={node.y + 5}
               textAnchor="end"
-              className="fill-black font-sans text-sm"
+              className="fill-black"
+              style={{ fontFamily: "var(--font-sans)", fontSize: "14px" }}
             >
               {node.value}
             </text>
@@ -258,7 +261,8 @@ export function TransportGraph({
               x={node.x}
               y={node.y + 5}
               textAnchor="middle"
-              className="fill-black font-sans text-sm font-medium"
+              className="fill-black"
+              style={{ fontFamily: "var(--font-sans)", fontSize: "14px", fontWeight: "500" }}
             >
               {node.id}
             </text>
@@ -266,7 +270,8 @@ export function TransportGraph({
               x={node.x + 35}
               y={node.y + 5}
               textAnchor="start"
-              className="fill-black font-sans text-sm"
+              className="fill-black"
+              style={{ fontFamily: "var(--font-sans)", fontSize: "14px" }}
             >
               {node.value}
             </text>

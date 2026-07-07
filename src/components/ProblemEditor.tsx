@@ -63,8 +63,8 @@ export function ProblemEditor() {
           Charger l'exemple du cours
         </Button>
         <Button variant="outline" onClick={() => setProblem({
-          supply: Array.from({ length: m }, () => 10),
-          demand: Array.from({ length: n }, () => 10),
+          supply: Array.from({ length: m }, () => 0),
+          demand: Array.from({ length: n }, () => 0),
           costs: Array.from({ length: m }, () => Array.from({ length: n }, () => 0)),
           rowLabels: Array.from({ length: m }, (_, i) => String.fromCharCode(65 + i)),
           colLabels: Array.from({ length: n }, (_, j) => `D${j + 1}`),
@@ -104,26 +104,28 @@ export function ProblemEditor() {
                   <td key={j} className="p-0.5">
                     <Input
                       type="number"
-                      value={problem.costs[i][j]}
+                      value={problem.costs[i][j] === 0 ? "" : problem.costs[i][j]}
                       onChange={(e) => {
                         const costs = problem.costs.map((r) => [...r]);
-                        costs[i][j] = +e.target.value;
+                        costs[i][j] = e.target.value === "" ? 0 : +e.target.value;
                         update({ costs });
                       }}
                       className="w-16 h-9 text-center font-mono"
+                      placeholder="0"
                     />
                   </td>
                 ))}
                 <td className="p-0.5">
                   <Input
                     type="number"
-                    value={s}
+                    value={s === 0 ? "" : s}
                     onChange={(e) => {
                       const supply = [...problem.supply];
-                      supply[i] = +e.target.value;
+                      supply[i] = e.target.value === "" ? 0 : +e.target.value;
                       update({ supply });
                     }}
                     className="w-16 h-9 text-center font-mono bg-accent/10"
+                    placeholder="0"
                   />
                 </td>
               </tr>
@@ -134,13 +136,14 @@ export function ProblemEditor() {
                 <td key={j} className="p-0.5">
                   <Input
                     type="number"
-                    value={d}
+                    value={d === 0 ? "" : d}
                     onChange={(e) => {
                       const demand = [...problem.demand];
-                      demand[j] = +e.target.value;
+                      demand[j] = e.target.value === "" ? 0 : +e.target.value;
                       update({ demand });
                     }}
                     className="w-16 h-9 text-center font-mono bg-accent/10"
+                    placeholder="0"
                   />
                 </td>
               ))}
