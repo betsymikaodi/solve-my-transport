@@ -4,6 +4,7 @@ import { Download } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import type { Allocation } from "@/lib/transport/core";
+import { TransportGraph } from "@/components/TransportGraph";
 
 export function FinalReport() {
   const { balanced, initResult, optimResult, initMethod, optimMethod } = useStore();
@@ -68,6 +69,21 @@ export function FinalReport() {
         </Button>
       </div>
 
+      {/* Graph visualization */}
+      <div className="space-y-2">
+        <h4 className="font-display text-sm uppercase tracking-wider text-muted-foreground">
+          Visualisation graphique des flux
+        </h4>
+        <TransportGraph
+          problem={balanced}
+          allocations={optimResult.finalAllocations}
+          showCosts={true}
+          showPotentials={optimMethod === "MODI"}
+          potentials={optimResult.steps[optimResult.steps.length - 1]?.potentials}
+        />
+      </div>
+
+      {/* Table */}
       <div className="overflow-auto">
         <table className="w-full text-sm border-collapse">
           <thead>

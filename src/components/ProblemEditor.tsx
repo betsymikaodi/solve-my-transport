@@ -62,6 +62,15 @@ export function ProblemEditor() {
         <Button variant="outline" onClick={() => setProblem(EXAMPLE)}>
           Charger l'exemple du cours
         </Button>
+        <Button variant="outline" onClick={() => setProblem({
+          supply: Array.from({ length: m }, () => 10),
+          demand: Array.from({ length: n }, () => 10),
+          costs: Array.from({ length: m }, () => Array.from({ length: n }, () => 0)),
+          rowLabels: Array.from({ length: m }, (_, i) => String.fromCharCode(65 + i)),
+          colLabels: Array.from({ length: n }, (_, j) => `D${j + 1}`),
+        })}>
+          Saisie manuelle
+        </Button>
         <div
           className={`ml-auto px-3 py-2 rounded-md text-sm font-mono ${balanced ? "bg-positive/15 text-positive" : "bg-destructive/15 text-destructive"}`}
         >
