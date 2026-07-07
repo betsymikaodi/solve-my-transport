@@ -1,7 +1,7 @@
 // Core types & utilities for the transportation problem solver
 
-export type InitMethod = "NorthWest" | "MINILI" | "MINICO" | "MINITAB" | "BHammer";
-export type OptimMethod = "SteppingStone" | "MODI";
+export type InitMethod = "NorthWest" | "MINILI" | "MINICO" | "MINITAB";
+export type OptimMethod = "SteppingStone";
 
 export interface TransportProblem {
   supply: number[];

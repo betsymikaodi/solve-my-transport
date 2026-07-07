@@ -47,8 +47,8 @@ export const EXAMPLE: TransportProblem = {
 
 export const useStore = create<Store>((set, get) => ({
   problem: EXAMPLE,
-  initMethod: "BHammer",
-  optimMethod: "MODI",
+  initMethod: "MINITAB",
+  optimMethod: "SteppingStone",
   balanced: null,
   initResult: null,
   optimResult: null,

@@ -5,13 +5,12 @@ import { solveOptim } from "@/lib/transport/optim";
 import { InitMethod } from "@/lib/transport/core";
 import { useMemo } from "react";
 
-const METHODS: InitMethod[] = ["NorthWest", "MINILI", "MINICO", "MINITAB", "BHammer"];
+const METHODS: InitMethod[] = ["NorthWest", "MINILI", "MINICO", "MINITAB"];
 const LABELS: Record<InitMethod, string> = {
   NorthWest: "Coin Nord-Ouest",
   MINILI: "MINILI (ligne)",
   MINICO: "MINICO (colonne)",
   MINITAB: "MINITAB (global)",
-  BHammer: "Balas-Hammer",
 };
 
 export function MethodComparison() {
@@ -47,7 +46,7 @@ export function MethodComparison() {
             <th className="p-3 text-right font-display">Z initial</th>
             <th className="p-3 text-right font-display">Z optimisé</th>
             <th className="p-3 text-right font-display">
-              Itérations {optimMethod === "MODI" ? "(MODI)" : "(SS)"}
+              Itérations (SS)
             </th>
             <th className="p-3 text-right font-display">Écart init→opt</th>
           </tr>

@@ -78,8 +78,7 @@ export function FinalReport() {
           problem={balanced}
           allocations={optimResult.finalAllocations}
           showCosts={true}
-          showPotentials={optimMethod === "MODI"}
-          potentials={optimResult.steps[optimResult.steps.length - 1]?.potentials}
+          showPotentials={false}
         />
       </div>
 

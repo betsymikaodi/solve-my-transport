@@ -17,13 +17,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Résolvez et visualisez pas à pas les problèmes de transport linéaire : Balas-Hammer, MODI, Stepping-Stone.",
+          "Résolvez et visualisez pas à pas les problèmes de transport linéaire : MINITAB, Stepping-Stone.",
       },
       { property: "og:title", content: "TRANSP — Solveur de transport" },
       {
         property: "og:description",
         content:
-          "Méthodes Nord-Ouest, MINILI, MINICO, MINITAB, Balas-Hammer + Stepping-Stone & MODI.",
+          "Méthodes Nord-Ouest, MINILI, MINICO, MINITAB + Stepping-Stone.",
       },
     ],
   }),
@@ -35,12 +35,10 @@ const INIT_METHODS: { id: InitMethod; label: string; desc: string }[] = [
   { id: "MINILI", label: "MINILI", desc: "Min ligne par ligne" },
   { id: "MINICO", label: "MINICO", desc: "Min colonne par colonne" },
   { id: "MINITAB", label: "MINITAB", desc: "Min global du tableau" },
-  { id: "BHammer", label: "Balas-Hammer", desc: "Différence maximale (VAM)" },
 ];
 
 const OPTIM_METHODS: { id: OptimMethod; label: string; desc: string }[] = [
   { id: "SteppingStone", label: "Stepping-Stone", desc: "Transferts via cycles" },
-  { id: "MODI", label: "MODI (Potentiels)", desc: "uᵢ + vⱼ = cᵢⱼ" },
 ];
 
 function Index() {

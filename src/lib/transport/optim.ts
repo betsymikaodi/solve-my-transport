@@ -1,4 +1,4 @@
-// Optimization: Stepping-Stone and MODI.
+// Optimization: Stepping-Stone.
 
 import {
   Allocation,
@@ -23,27 +23,6 @@ function emptyCells(allocs: Allocation[], m: number, n: number): [number, number
   return out;
 }
 
-function computePotentials(allocs: Allocation[], costs: number[][], m: number, n: number) {
-  const u: (number | null)[] = new Array(m).fill(null);
-  const v: (number | null)[] = new Array(n).fill(null);
-  u[0] = 0;
-  let changed = true;
-  let safety = m * n + 5;
-  while (changed && safety-- > 0) {
-    changed = false;
-    for (const a of allocs) {
-      if (u[a.row] !== null && v[a.col] === null) {
-        v[a.col] = costs[a.row][a.col] - (u[a.row] as number);
-        changed = true;
-      } else if (v[a.col] !== null && u[a.row] === null) {
-        u[a.row] = costs[a.row][a.col] - (v[a.col] as number);
-        changed = true;
-      }
-    }
-  }
-  return { u, v };
-}
-
 export function solveOptim(
   method: OptimMethod,
   initial: Allocation[],
@@ -59,28 +38,18 @@ export function solveOptim(
   while (iter < MAX_ITER) {
     iter++;
     const totalCost = computeCost(allocs, p.costs);
-    let potentials: { u: (number | null)[]; v: (number | null)[] } | undefined;
     const deltas: { row: number; col: number; delta: number }[] = [];
 
-    if (method === "MODI") {
-      potentials = computePotentials(allocs, p.costs, m, n);
-      for (const [i, j] of emptyCells(allocs, m, n)) {
-        const ui = potentials.u[i] ?? 0;
-        const vj = potentials.v[j] ?? 0;
-        deltas.push({ row: i, col: j, delta: p.costs[i][j] - ui - vj });
-      }
-    } else {
-      // Stepping-Stone
-      for (const [i, j] of emptyCells(allocs, m, n)) {
-        const cyc = findCycle(allocs, i, j);
-        if (!cyc) continue;
-        const signs = cycleSigns(cyc);
-        let d = 0;
-        cyc.forEach(([r, c], k) => {
-          d += (signs[k] === "+" ? 1 : -1) * p.costs[r][c];
-        });
-        deltas.push({ row: i, col: j, delta: d });
-      }
+    // Stepping-Stone
+    for (const [i, j] of emptyCells(allocs, m, n)) {
+      const cyc = findCycle(allocs, i, j);
+      if (!cyc) continue;
+      const signs = cycleSigns(cyc);
+      let d = 0;
+      cyc.forEach(([r, c], k) => {
+        d += (signs[k] === "+" ? 1 : -1) * p.costs[r][c];
+      });
+      deltas.push({ row: i, col: j, delta: d });
     }
 
     // pick most negative
@@ -96,7 +65,6 @@ export function solveOptim(
         iteration: iter,
         allocations: cloneAllocs(allocs),
         totalCost,
-        potentials,
         deltas,
         optimal: true,
         multipleOptima,
@@ -111,7 +79,6 @@ export function solveOptim(
         iteration: iter,
         allocations: cloneAllocs(allocs),
         totalCost,
-        potentials,
         deltas,
         optimal: true,
         multipleOptima,
@@ -126,7 +93,6 @@ export function solveOptim(
       iteration: iter,
       allocations: cloneAllocs(allocs),
       totalCost,
-      potentials,
       deltas,
       enteringCell: [best.row, best.col],
       cycle: { cells: cyc, signs },
@@ -148,5 +114,3 @@ export function solveOptim(
     multipleOptima,
   };
 }
-
-export { computePotentials };
